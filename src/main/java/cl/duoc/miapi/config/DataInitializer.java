@@ -1,25 +1,21 @@
 package cl.duoc.miapi.config;
 
-import cl.duoc.miapi.model.Usuario;
-import cl.duoc.miapi.repository.UsuarioRepository;
+import cl.duoc.miapi.model.Paciente;
+import cl.duoc.miapi.repository.PacienteRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
 
 @Configuration
 public class DataInitializer {
 
     @Bean
-    CommandLineRunner cargarDatosDemo(UsuarioRepository usuarioRepository) {
+    CommandLineRunner initPacientes(PacienteRepository pacienteRepository) {
         return args -> {
-            if (usuarioRepository.count() == 0) {
-                Usuario usuario1 = new Usuario(null, "Carlos", "Muñoz", 32, "vip");
-                Usuario usuario2 = new Usuario(null, "María", "Urrutia", 26, "vip");
-                Usuario usuario3 = new Usuario(null, "Antonia", "Saez", 25, "regular");
-
-                usuarioRepository.saveAll(List.of(usuario1, usuario2, usuario3));
+            if (pacienteRepository.count() == 0) {
+                pacienteRepository.save(new Paciente("Luna", "Perro", "Labrador", 3));
+                pacienteRepository.save(new Paciente("Milo", "Gato", "Siamés", 2));
+                pacienteRepository.save(new Paciente("Rocky", "Perro", "Bulldog", 5));
             }
         };
     }
