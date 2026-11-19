@@ -2,15 +2,14 @@ package cl.duoc.miapi.controller;
 
 import cl.duoc.miapi.model.Paciente;
 import cl.duoc.miapi.service.PacienteService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/pacientes")
+@RequestMapping("/api/v1/pacientes")
 @CrossOrigin(origins = "http://localhost:5173")
 public class PacienteController {
 
@@ -23,5 +22,33 @@ public class PacienteController {
     @GetMapping
     public List<Paciente> listar() {
         return pacienteService.listarTodos();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Paciente> obtenerPorId(@PathVariable Long id) {
+        return pacienteService.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<Paciente> crear(@RequestBody Paciente paciente) {
+        Paciente creado = pacienteService.guardar(paciente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(creado);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Paciente> actualizar(@PathVariable Long id,
+                                               @RequestBody Paciente paciente) {
+        return pacienteService.actualizar(id, paciente)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        return pacienteService.eliminar(id)
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
     }
 }
