@@ -5,6 +5,7 @@ import cl.duoc.miapi.service.PacienteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -32,14 +33,14 @@ public class PacienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Paciente> crear(@RequestBody Paciente paciente) {
+    public ResponseEntity<Paciente> crear(@Valid @RequestBody Paciente paciente) {
         Paciente creado = pacienteService.guardar(paciente);
         return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Paciente> actualizar(@PathVariable Long id,
-                                               @RequestBody Paciente paciente) {
+        public ResponseEntity<Paciente> actualizar(@PathVariable Long id,
+                                                    @Valid @RequestBody Paciente paciente) {
         return pacienteService.actualizar(id, paciente)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
