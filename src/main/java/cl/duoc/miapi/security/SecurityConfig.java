@@ -133,6 +133,8 @@ public class SecurityConfig {
                         .hasRole("ADMIN")
                         .requestMatchers("/api/v1/patients", "/api/v1/patients/**")
                         .hasRole("ADMIN")
+                        // Perfil propio: cualquier usuario con sesión (va antes de /users/**)
+                        .requestMatchers("/api/v1/users/me").authenticated()
                         .requestMatchers("/api/v1/users", "/api/v1/users/**")
                         .hasRole("ADMIN")
                         .requestMatchers("/api/v1/reports", "/api/v1/reports/**")

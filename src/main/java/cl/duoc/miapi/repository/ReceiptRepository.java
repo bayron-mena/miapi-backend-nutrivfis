@@ -21,4 +21,6 @@ public interface ReceiptRepository extends JpaRepository<Receipt, Long> {
 
     @EntityGraph(attributePaths = {"details", "user"})
     Optional<Receipt> findWithDetailsById(Long id);
+
+    boolean existsByUserId(Long userId);
 }
