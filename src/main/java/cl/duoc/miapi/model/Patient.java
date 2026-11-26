@@ -13,32 +13,35 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-public class Paciente {
+public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "El nombre es obligatorio")
-    private String nombre;
+    private String name;
 
     @NotBlank(message = "La especie es obligatoria")
-    private String especie;
+    private String species;
 
-    private String raza;
+    private String breed;
 
     @NotNull(message = "La edad es obligatoria")
     @Min(value = 0, message = "La edad no puede ser negativa")
-    private Integer edad;
+    private Integer age;
 
-    public Paciente() {
+    // Nombre del dueño de la mascota
+    private String owner;
+
+    public Patient() {
     }
 
-    public Paciente(String nombre, String especie, String raza, Integer edad) {
-        this.nombre = nombre;
-        this.especie = especie;
-        this.raza = raza;
-        this.edad = edad;
+    public Patient(String name, String species, String breed, Integer age, String owner) {
+        this.name = name;
+        this.species = species;
+        this.breed = breed;
+        this.age = age;
+        this.owner = owner;
     }
-
 }

@@ -1,9 +1,9 @@
 package cl.duoc.miapi.repository;
 
-import cl.duoc.miapi.model.Paciente;
+import cl.duoc.miapi.model.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PacienteRepository extends JpaRepository<Paciente, Long> {
+public interface PatientRepository extends JpaRepository<Patient, Long> {
 }

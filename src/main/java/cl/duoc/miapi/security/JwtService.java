@@ -35,8 +35,8 @@ public class JwtService {
                         ahora.plus(Duration.ofMinutes(expirationMinutes))
                 )
                 .subject(user.getEmail())
-                .claim("nombre", user.getNombre())
-                .claim("rol", user.getRol().name())
+                .claim("name", user.getName())
+                .claim("role", user.getRole().name())
                 .build();
 
         JwsHeader header = JwsHeader
@@ -48,6 +48,9 @@ public class JwtService {
         ).getTokenValue();
     }
 
+    public long expirationSeconds() {
+        return Duration.ofMinutes(expirationMinutes).toSeconds();
+    }
 
 }
 
